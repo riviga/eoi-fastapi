@@ -3,5 +3,5 @@ __pycache__
 *.py[cod]
 *$py.class
 
-**/api/myapp.log
+**/myapp.log
 .vscode
