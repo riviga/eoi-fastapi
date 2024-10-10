@@ -39,8 +39,6 @@ app = FastAPI(
                 ]
 )
 
-app = FastAPI()
-
 def custom_openapi():
     if not app.openapi_schema:
         app.openapi_schema = get_openapi(
@@ -55,12 +53,20 @@ def custom_openapi():
             tags=app.openapi_tags,
             servers=app.servers,
         )
-        for _, method_item in app.openapi_schema.get('paths').items():
-            for _, param in method_item.items():
-                responses = param.get('responses')
-                # remove 422 response, also can remove other status code
-                if '422' in responses:
-                    del responses['422']
+    for _, method_item in app.openapi_schema.get('paths').items():
+        for _, param in method_item.items():
+            responses = param.get('responses')
+            # remove 422 response
+            if '422' in responses:
+                del responses['422']
+    
+    schemas = app.openapi_schema.get('components').get('schemas')        
+    # remove 422 schemas
+    for schema_borrar in ["ValidationError", "HTTPValidationError"]:
+        if schema_borrar in schemas.keys():                
+            del schemas[schema_borrar]                                    
+    app.openapi_schema['components']['schemas'] = schemas
+        
     return app.openapi_schema
 
 app.openapi = custom_openapi

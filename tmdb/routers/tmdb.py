@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Path, status
 from model import MovieTMDB
-from model import HTTPExceptionModel, MovieTMDB
+from model import ResponseError, MovieTMDB
 from logger import log
 from httpx import AsyncClient
 import requests
@@ -23,10 +23,10 @@ fields = ["id", "title", "vote_average", "original_title", "release_date"]
         
 @router.get('/search/{title}', description="Search movies by title using TMDB Public API",
         responses={
-            status.HTTP_200_OK: {"description": "Query results", "model": list[MovieTMDB]}, 
-            status.HTTP_401_UNAUTHORIZED: {"description": "You need to send credentials", "model": HTTPExceptionModel},
-            status.HTTP_404_NOT_FOUND: {"description": "Movie not found", "model": HTTPExceptionModel},
-            status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": HTTPExceptionModel}            
+            status.HTTP_200_OK: {"description": "List of movies maching name", "model": list[MovieTMDB]}, 
+            status.HTTP_401_UNAUTHORIZED: {"description": "You need to send credentials", "model": ResponseError},
+            status.HTTP_404_NOT_FOUND: {"description": "Movie not found", "model": ResponseError},
+            status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": ResponseError}            
         })
 async def search_movie_title(title: str = Path(description="Movie title", min_length=1, example="Back to the future")):
     try:
@@ -42,9 +42,9 @@ async def search_movie_title(title: str = Path(description="Movie title", min_le
 @router.get('/movie/{movie_id}', description="Get movie info from TMDB Public API",
         responses={
             status.HTTP_200_OK: {"description": "Movie info"}, 
-            status.HTTP_401_UNAUTHORIZED: {"description": "You need to send credentials", "model": HTTPExceptionModel},
-            status.HTTP_404_NOT_FOUND: {"description": "Movie not found", "model": HTTPExceptionModel},
-            status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": HTTPExceptionModel}            
+            status.HTTP_401_UNAUTHORIZED: {"description": "You need to send credentials", "model": ResponseError},
+            status.HTTP_404_NOT_FOUND: {"description": "Movie not found", "model": ResponseError},
+            status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": ResponseError}            
         })
 async def get_movie_info(movie_id: int = Path(description="Movie id in TMDB", min=1, example=165)):
     try:
@@ -57,8 +57,8 @@ async def get_movie_info(movie_id: int = Path(description="Movie id in TMDB", mi
     
 async def send_get_request(url: str):
     log.info(f"GET {url}")
-    response = requests.get(url, headers=HEADERS)            
-    # response = await async_client.get(url, headers=HEADERS)    
+    # response = requests.get(url, headers=HEADERS)            
+    response = await async_client.get(url, headers=HEADERS)    
     check_response_status(response.status_code)        
     response_json = response.json()                
     log.info(response_json)

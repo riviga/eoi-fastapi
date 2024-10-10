@@ -1,9 +1,10 @@
 from fastapi import APIRouter, HTTPException, Path, Response, status
-from model import HTTPExceptionModel, RecommendedMovies
+from model import ResponseError, RecommendedMovies
 from httpx import AsyncClient
 from util import to_json
 from logger import log
 import asyncio
+import time
 
 '''
 Microservice system with async requests
@@ -24,8 +25,8 @@ HEADERS = {"accept": "application/json"}
 @router.get('/user/{client_id}', description="Recommend similar movies to the favourite movie of the client, with metadata from TMDB",
         responses={
             status.HTTP_200_OK: {"description": "Favourite movie and similar movies recommended", "model": RecommendedMovies}, 
-            status.HTTP_404_NOT_FOUND: {"description": "Client not found", "model": HTTPExceptionModel},
-            status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": HTTPExceptionModel}            
+            status.HTTP_404_NOT_FOUND: {"description": "Client not found", "model": ResponseError},
+            status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": ResponseError}            
         })
 async def recommend_user_movies(client_id: str = Path(description="Client id", min_length=3, example="Rick")):    
     favourite_movie_list = await asyncio.gather(request_get_favourite(client_id))
@@ -72,5 +73,27 @@ async def request_search_title(movie_title):
 def check_response(response: Response, type: str):
     if response.status_code != 200:
         raise no_recommendations    
-    log.info(f"{type} [{response.text}]") 
+    log.info(f"{type} [{response.text}]")
+    
+
+# NEVER DO THIS!!    
+# Blocking call in async route
+# Async routes run on the main thread and are expected to never block for any significant period of time.
+# sleep() is blocking, so the main thread will stall.
+@router.get('/wait-async-block', include_in_schema=False)
+async def test():    
+    time.sleep(1)
+    
+# Blocking calls on sync route
+# Sync routes are run in a separate thread from a threadpool, so any blocking will not affect the main thread.
+@router.get('/wait-block', include_in_schema=False)
+def test():    
+    time.sleep(1)
+    
+# Awaiting coroutines on async routes
+# Awaiting an async function causes it to yield the main thread while it's waiting for an operation to complete, so it's not blocking the thread.
+# asyncio.sleep(), unlike time.sleep(), is an async function, so it can be awaited.
+@router.get('/wait-async-no-block', include_in_schema=False)
+async def test():    
+    await asyncio.sleep(1)
 

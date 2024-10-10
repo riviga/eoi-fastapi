@@ -2,7 +2,7 @@ from datetime import datetime
 from fastapi import APIRouter, Body, HTTPException, Path, status
 from fastapi.responses import PlainTextResponse
 from pydantic import BaseModel, Field
-from model import HTTPExceptionModel
+from model import ResponseError
 
 '''
 CRUD functionality with FastAPI
@@ -29,7 +29,7 @@ movies: dict[int, MovieModel] = {}
     status_code=status.HTTP_201_CREATED,
     responses={
         status.HTTP_201_CREATED: {"description": "Movie created", "model": MovieSchema},
-        status.HTTP_400_BAD_REQUEST: {"description": "Invalid movie id", "model": HTTPExceptionModel},
+        status.HTTP_400_BAD_REQUEST: {"description": "Invalid movie id", "model": ResponseError},
         
     },
     response_model=MovieSchema
@@ -44,7 +44,7 @@ def new_movie(movie: MovieSchema = Body(description="New movie"), id: int = Path
     summary="Get movie",   
     responses={
         status.HTTP_200_OK: {"description": "Movie returned", "model": MovieSchema},
-        status.HTTP_404_NOT_FOUND: {"description": "Movie id not found", "model": HTTPExceptionModel},
+        status.HTTP_404_NOT_FOUND: {"description": "Movie id not found", "model": ResponseError},
     },
     response_model=MovieSchema
 )
@@ -65,7 +65,7 @@ def get_movie_list():
     summary="Delete movie",    
     responses={
         status.HTTP_200_OK: {"description": "Movie deleted"},
-        status.HTTP_404_NOT_FOUND: {"description": "Movie id not found", "model": HTTPExceptionModel},
+        status.HTTP_404_NOT_FOUND: {"description": "Movie id not found", "model": ResponseError},
     },
     response_class = PlainTextResponse
 )
@@ -79,7 +79,7 @@ def delete_movie(id: int = Path(description="Movie id")):
     summary="Put movie",    
     responses={
         status.HTTP_200_OK: {"description": "Movie updated"},
-        status.HTTP_404_NOT_FOUND: {"description": "Movie id not found", "model": HTTPExceptionModel},
+        status.HTTP_404_NOT_FOUND: {"description": "Movie id not found", "model": ResponseError},
     },
     response_model=MovieSchema
 )

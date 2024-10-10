@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from db_redis import redis
 from logger import log
 from security import UserSchema, apikey_security, authenticate_user, basic_security, create_access_token, get_validated_active_user, validate_apikey, validate_basic
-from model import HTTPExceptionModel
+from model import ResponseError
 
 '''
 Key-value functionality with FastAPI and Redis
@@ -24,8 +24,8 @@ class Token(BaseModel):
 @router.post("/token", summary="Login to get access token",
             responses={
                 status.HTTP_200_OK: {"description": "Credentials validated. Token returned", "model": Token},                
-                status.HTTP_401_UNAUTHORIZED: {"description": "Invalid credentials", "model": HTTPExceptionModel},
-                status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": HTTPExceptionModel}                  
+                status.HTTP_401_UNAUTHORIZED: {"description": "Invalid credentials", "model": ResponseError},
+                status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": ResponseError}                  
             })
 async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> Token:
     authenticate_user(form_data)        
@@ -35,9 +35,9 @@ async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm,
 @router.get("/keys", summary= "Get list of clients",
         responses={
             status.HTTP_200_OK: {"description": "Client list returned", "model": list[str]},
-            status.HTTP_400_BAD_REQUEST: {"description": "Disabled user", "model": HTTPExceptionModel},
-            status.HTTP_401_UNAUTHORIZED: {"description": "Invalid credentials", "model": HTTPExceptionModel},
-            status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": HTTPExceptionModel}                  
+            status.HTTP_400_BAD_REQUEST: {"description": "Disabled user", "model": ResponseError},
+            status.HTTP_401_UNAUTHORIZED: {"description": "Invalid credentials", "model": ResponseError},
+            status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": ResponseError}                  
         })
 async def get_client_list(current_user: UserSchema = Depends(get_validated_active_user)): 
     log.info(f"/Se devuelve la lista de clientes al usuario [{current_user.username}] con token válido y activo")
@@ -54,10 +54,10 @@ def get_redis_keys():
 @router.get("/{client_id}", summary= "Get client favourite movie",
         responses={
             status.HTTP_200_OK: {"description": "Movie returned"}, 
-            status.HTTP_401_UNAUTHORIZED: {"description": "Invalid credentials", "model": HTTPExceptionModel},
-            status.HTTP_403_FORBIDDEN: {"description": "No x-apikey sent", "model": HTTPExceptionModel},
-            status.HTTP_404_NOT_FOUND: {"description": "Client id not found", "model": HTTPExceptionModel},
-            status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": HTTPExceptionModel}            
+            status.HTTP_401_UNAUTHORIZED: {"description": "Invalid credentials", "model": ResponseError},
+            status.HTTP_403_FORBIDDEN: {"description": "No x-apikey sent", "model": ResponseError},
+            status.HTTP_404_NOT_FOUND: {"description": "Client id not found", "model": ResponseError},
+            status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": ResponseError}            
         },
         response_class=PlainTextResponse)
 def get_favourite_movie(client_id: str = Path(description="Client identifier", min_length=3), 
@@ -83,8 +83,8 @@ def get_redis_value(client_id: str):
 @router.post("/{client_id}", summary= "Register client favourite movie",
         responses={
             status.HTTP_200_OK: {"description": "Favourite movie registered"},
-            status.HTTP_401_UNAUTHORIZED: {"description": "Invalid credentials", "model": HTTPExceptionModel},
-            status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": HTTPExceptionModel}            
+            status.HTTP_401_UNAUTHORIZED: {"description": "Invalid credentials", "model": ResponseError},
+            status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": ResponseError}            
             })
 def register_favourite_movie(credentials: HTTPBasicCredentials = Depends(basic_security), 
                              client_id: str = Path(description="Client identifier", min_length=3), 
