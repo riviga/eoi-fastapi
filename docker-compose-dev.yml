@@ -1,33 +1,51 @@
 services:
-  kv:     
+  kv: 
+    build: /kv
     image: riviga77/eoi-fastapi-kv
     container_name: kv
-    ports: 
+    ports:
       - "8000:8000"
+    volumes:
+      - ./kv:/code
   
   redis:
     image: "redis:latest"
     container_name: redis
     ports:
-      - "6379:6379"    
+      - "6379:6379"
+    volumes:
+      - ./kv/data:/data
 
-  predict:     
+  predict: 
+    build: /predict
     image: riviga77/eoi-fastapi-predict
     container_name: predict
     ports:
-      - "8001:8000"    
+      - "8001:8000"
+    volumes:
+      - ./predict:/code
 
-  tmdb:     
+  tmdb: 
+    build: /tmdb
     image: riviga77/eoi-fastapi-tmdb
     container_name: tmdb
     ports:
-      - "8002:8000"    
+      - "8002:8000"
+    volumes:
+      - ./tmdb:/code
     environment:
       - API_KEY=$API_KEY_VALUE
 
-  micro:     
+  micro: 
+    build: /micro
     image: riviga77/eoi-fastapi-micro
     container_name: micro
     ports:
       - "8003:8000"
-      
+    volumes:
+      - ./micro:/code      
+
+  ab:
+    image: httpd
+    container_name: apache-httpd
+
