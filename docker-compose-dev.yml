@@ -1,3 +1,4 @@
+# For development purposes. Since it builds the images, it needs to be executed from the root of the cloned repo
 services:
   kv: 
     build: /kv

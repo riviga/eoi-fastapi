@@ -1,3 +1,4 @@
+# For production. It pulls the images from Docker Hub
 services:
   kv:     
     image: riviga77/eoi-fastapi-kv
@@ -10,6 +11,8 @@ services:
     container_name: redis
     ports:
       - "6379:6379"    
+    volumes:
+      - ./redis_data:/data
 
   predict:     
     image: riviga77/eoi-fastapi-predict
