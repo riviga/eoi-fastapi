@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+elastic-apm
+requests
+httpx
+pydantic-settings
