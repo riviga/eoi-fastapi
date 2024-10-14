@@ -8,3 +8,5 @@ myapp.log
 .env
 redis_data/dump.rdb
 kv/data/dump.rdb
+act4
+
