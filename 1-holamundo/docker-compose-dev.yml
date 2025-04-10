@@ -1,0 +1,10 @@
+services:
+  holamundo: 
+    build: /1-holamundo
+    image: eoi-fastapi-holamundo
+    container_name: holamundo
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./1-holamundo:/code
+
