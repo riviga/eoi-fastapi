@@ -6,7 +6,6 @@ __pycache__
 myapp.log
 .vscode
 .env
-redis_data/dump.rdb
-kv/data/dump.rdb
+dump.rdb
 act4
 
