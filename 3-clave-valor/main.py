@@ -8,7 +8,7 @@ from routers import kv
 from logger import log
 from elasticapm.contrib.starlette import ElasticAPM, make_apm_client
 
-descripcion = "Ingeniería de Datos: Caso uso clave-valor con FastAPI"
+descripcion = "Ingeniería de Datos: Caso uso clave-valor"
     
 app = FastAPI(
     description=descripcion,
@@ -24,14 +24,6 @@ app = FastAPI(
         "url": "https://www.gnu.org/licenses/gpl-3.0.en.html", 
     }, 
     openapi_tags= [     
-                    {
-                        "name": "holamundo",
-                        "description": "Operaciones para saludar"
-                    },
-                                     {
-                        "name": "movies",
-                        "description": "Operaciones CRUD sobre películas"
-                    },
                     {
                         "name": "key-value",
                         "description": "Operaciones clave-valor"
