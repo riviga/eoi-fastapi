@@ -1,11 +1,12 @@
 from datetime import datetime
-from fastapi import APIRouter, Body, HTTPException, Path, status
+from fastapi import APIRouter, Body, HTTPException, Path, Request, status, Header
 from fastapi.responses import PlainTextResponse
 from pydantic import BaseModel, Field
 from model import ResponseError
+from logger import log
 
 '''
-CRUD functionality with FastAPI
+CRUD functionality with movie resources
 '''
 
 router = APIRouter(tags=["movies"], prefix="/movies")
@@ -17,7 +18,6 @@ class MovieSchema(BaseModel):
 
 class MovieModel(MovieSchema):
     creation_date: datetime
-
     
 class MovieResponseModel(BaseModel):
     msg: str = Field(description="Message", example="Movie deleted")
@@ -48,7 +48,9 @@ def new_movie(movie: MovieSchema = Body(description="New movie"), id: int = Path
     },
     response_model=MovieSchema
 )
-def get_movie(id: int = Path(description="Movie id")):   
+def get_movie(request: Request, id: int = Path(description="Movie id"), my_special_header: str = Header(description = "Speacial header")):   
+    headers = request.headers
+    log.info(f"special-header {my_special_header} resto {headers}")
     if id not in movies:
         raise HTTPException(detail="Movie id not found", status_code=status.HTTP_404_NOT_FOUND)        
     return movies[id]

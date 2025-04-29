@@ -1,0 +1,9 @@
+services:
+  kv: 
+    build: .
+    image: eoi-fastapi-rest
+    container_name: rest
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
