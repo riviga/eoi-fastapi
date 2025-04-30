@@ -55,7 +55,7 @@ def hola(color: ColorEnum = Path(description="Tipo de pelo")):
         status.HTTP_404_NOT_FOUND: {"description": "No hay nadie"},
     },
 )
-def hola(response: Response, alguien: bool = Query(description="Indicador de si hay alguien", example="true", default=False)):
+def hola(response: Response, alguien: bool = Query(description="Indicador de si hay alguien", examples=["true"], default=False)):
     if alguien:
         return {"msg": f"Hola, porque hay alguien!"}
     else:
