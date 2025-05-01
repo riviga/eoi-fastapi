@@ -1,10 +1,9 @@
 services:
-  holamundo: 
+  fastapi: 
     build: .
     image: eoi-fastapi-holamundo
-    container_name: holamundo
+    container_name: eoi-fastapi-holamundo
     ports:
       - "8000:8000"
     volumes:
       - .:/code
-

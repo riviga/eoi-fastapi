@@ -1,8 +1,8 @@
 services:
-  kv: 
+  fastapi: 
     build: .
     image: eoi-fastapi-kv
-    container_name: kv
+    container_name: eoi-fastapi-kv
     ports:
       - "8000:8000"
     volumes:
@@ -13,4 +13,3 @@ services:
     container_name: redis    
     volumes:
       - ./data:/data
-

@@ -2,20 +2,22 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
 from fastapi.responses import PlainTextResponse
 from fastapi.security import HTTPBasicCredentials, OAuth2PasswordRequestForm
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from db_redis import redis
 from logger import log
 from security import UserSchema, apikey_security, authenticate_user, basic_security, create_access_token, get_validated_active_user, validate_apikey, validate_basic
-from model import ResponseError
 
 '''
-Key-value functionality with FastAPI and Redis
+Key-value functionality with Redis
 '''
 
 router = APIRouter(tags=["key-value"], prefix="/kv")
 
 http_500 = HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail='Internal Server Error')
 
+class ResponseError(BaseModel):
+    detail: str = Field(description="Error message", example="Client id not found")
+    
 class Token(BaseModel):
     access_token: str
     token_type: str

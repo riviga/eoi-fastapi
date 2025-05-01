@@ -1,8 +1,8 @@
 services:
-  kv: 
+  fastapi: 
     build: .
     image: eoi-fastapi-rest
-    container_name: rest
+    container_name: eoi-fastapi-rest
     ports:
       - "8000:8000"
     volumes:
