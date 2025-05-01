@@ -44,8 +44,6 @@ def get_shuffled_list(shuffle: bool):
             status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal Server Error", "model": ResponseError}            
         })
 def get_similar_movies(title: str = Path(description="Movie title", min_length=1, example="Interstellar")):
-    #await asyncio.sleep(2)
-    #time.sleep(2)
     if not title in title_list:
         raise HTTPException(detail=f"Movie {title} not found", status_code=status.HTTP_404_NOT_FOUND)
     index = df[df['title'] == title].index[0]

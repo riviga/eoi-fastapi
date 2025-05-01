@@ -4,7 +4,6 @@ from model import ResponseError, MovieTMDB
 from logger import log
 from httpx import AsyncClient
 from settings import settings
-import requests
 
 '''
 Public API wrapper with blocking requests
@@ -57,7 +56,6 @@ async def get_movie_info(movie_id: int = Path(description="Movie id in TMDB", mi
     
 async def send_get_request(url: str):
     log.info(f"GET {url}")
-    # response = requests.get(url, headers=HEADERS)            
     response = await async_client.get(url, headers=HEADERS)    
     check_response_status(response.status_code)        
     response_json = response.json()                
