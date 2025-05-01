@@ -10,11 +10,13 @@
 1. Register in TMDB for API key in https://www.themoviedb.org/settings/api
 2. Create /tmdb/.env file with API_KEY_VALUE={value of TMDB apikey}
 
-## How to run all apps in "production" mode (pulling images from DockerHub)
+## How to run all apps in "production" mode
+Pulls images from DockerHub
 1. Start: `docker-compose up -d`
 2. Stop: `docker-compose down`
 
-## How to run all apps in "development" mode (local containers started from built images with volumes for code auto-reload)
+## How to run all apps in "development" mode 
+Builds local code into Docker images with volumes for code auto-reload
 1. Start: `docker compose -f .\docker-compose-dev.yml up -d --build`
 2. Stop: `docker-compose -f .\docker-compose-dev.yml down`
 
