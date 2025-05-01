@@ -19,9 +19,9 @@
 2. Stop: `docker-compose -f .\docker-compose-dev.yml down`
 
 Swagger UI: 
-    - HolaMundo:    http://localhost:8000/docs
-    - REST:         http://localhost:8001/docs
-    - Clave-valor:  http://localhost:8002/docs
-    - Prediction:   http://localhost:8003/docs
-    - TMDB:         http://localhost:8004/docs
-    - Microservices: http://localhost:8006/docs
+- HolaMundo:    http://localhost:8000/docs
+- REST:         http://localhost:8001/docs
+- Clave-valor:  http://localhost:8002/docs
+- Prediction:   http://localhost:8003/docs
+- TMDB:         http://localhost:8004/docs
+- Microservices: http://localhost:8006/docs
