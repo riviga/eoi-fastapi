@@ -1,10 +1,22 @@
-# For production. It pulls the images from Docker Hub
+# For production. Pulls the images from Docker Hub
 services:
+  holamundo:     
+    image: riviga77/eoi-fastapi-holamundo
+    container_name: holamundo
+    ports:
+      - "8000:8000"
+
+  rest:     
+    image: riviga77/eoi-fastapi-rest
+    container_name: rest
+    ports:
+      - "8001:8000"          
+
   kv:     
     image: riviga77/eoi-fastapi-kv
     container_name: kv
     ports: 
-      - "8000:8000"
+      - "8002:8000"
   
   redis:
     image: "redis:latest"
@@ -16,13 +28,13 @@ services:
     image: riviga77/eoi-fastapi-predict
     container_name: predict
     ports:
-      - "8001:8000"    
+      - "8003:8000"    
 
   tmdb:     
     image: riviga77/eoi-fastapi-tmdb
     container_name: tmdb
     ports:
-      - "8002:8000"    
+      - "8004:8000"    
     environment:
       - API_KEY=$API_KEY_VALUE
 
@@ -30,5 +42,5 @@ services:
     image: riviga77/eoi-fastapi-micro
     container_name: micro
     ports:
-      - "8003:8000"
+      - "8005:8000"
       

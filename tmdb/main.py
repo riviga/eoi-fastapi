@@ -85,7 +85,7 @@ def redirigir():
 
 # APM
 apm = make_apm_client({
-    'SERVICE_NAME': 'fastapi-tmdb',
+    'SERVICE_NAME': 'eoi-fastapi-tmdb',
     'DEBUG': True,
     'SERVER_URL': 'https://99d3dc1c9c6a4587bceeb60ff53a396e.apm.us-central1.gcp.cloud.es.io',
     'CAPTURE_HEADERS': True,

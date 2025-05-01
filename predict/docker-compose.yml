@@ -1,0 +1,10 @@
+services:
+  fastapi: 
+    build: .
+    image: eoi-fastapi-predict
+    container_name: eoi-fastapi-predict
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+

@@ -9,8 +9,8 @@ descripcion = "Ingeniería de Datos: API REST"
     
 app = FastAPI(
     description=descripcion,
-    version="0.2.0",
-    title="Máster EOI - FastAPI API REST",
+    version="0.1.0",
+    title="Máster EOI - API REST",
     contact={
         "name": "Ricardo Vilchez",
         "url": "https://rickandmortyapi.com/",

@@ -24,7 +24,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     description=descripcion,
     version="0.1.0",
-    title="Máster EOI - FastAPI API predicción modelo",
+    title="Máster EOI - API predicción modelo",
     contact={
         "name": "Ricardo Vilchez",
         "url": "https://rickandmortyapi.com/",
@@ -84,7 +84,7 @@ def redirigir():
 
 # APM
 apm = make_apm_client({
-    'SERVICE_NAME': 'fastapi-predict',
+    'SERVICE_NAME': 'eoi-fastapi-predict',
     'DEBUG': True,
     'SERVER_URL': 'https://99d3dc1c9c6a4587bceeb60ff53a396e.apm.us-central1.gcp.cloud.es.io',
     'CAPTURE_HEADERS': True,

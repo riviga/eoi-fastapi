@@ -8,12 +8,12 @@ from routers import kv
 from logger import log
 from elasticapm.contrib.starlette import ElasticAPM, make_apm_client
 
-descripcion = "Ingeniería de Datos: Caso uso clave-valor"
+descripcion = "Ingeniería de Datos: Caso uso clave-valor securizado"
     
 app = FastAPI(
     description=descripcion,
-    version="0.3.0",
-    title="Máster EOI - FastAPI API clave-valor",
+    version="0.1.0",
+    title="Máster EOI - API clave-valor",
     contact={
         "name": "Ricardo Vilchez",
         "url": "https://rickandmortyapi.com/",

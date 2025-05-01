@@ -1,11 +1,29 @@
-# For development purposes. Since it builds the images, it needs to be executed from the root of the cloned repo
+# For development: Builds all images with volumes for auto-reload
 services:
+  holamundo:     
+    build: /holamundo
+    image: riviga77/eoi-fastapi-holamundo
+    container_name: holamundo
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./holamundo:/code
+
+  rest: 
+    build: /rest
+    image: riviga77/eoi-fastapi-rest
+    container_name: rest
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./rest:/code      
+
   kv: 
     build: /kv
     image: riviga77/eoi-fastapi-kv
     container_name: kv
     ports:
-      - "8000:8000"
+      - "8002:8000"
     volumes:
       - ./kv:/code
   
@@ -29,7 +47,7 @@ services:
     image: riviga77/eoi-fastapi-tmdb
     container_name: tmdb
     ports:
-      - "8002:8000"
+      - "8004:8000"
     volumes:
       - ./tmdb:/code
     environment:
@@ -40,7 +58,7 @@ services:
     image: riviga77/eoi-fastapi-micro
     container_name: micro
     ports:
-      - "8003:8000"
+      - "8005:8000"
     volumes:
       - ./micro:/code      
 

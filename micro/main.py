@@ -13,7 +13,7 @@ descripcion = "Ingeniería de Datos: Microservicios"
 app = FastAPI(
     description=descripcion,
     version="0.1.0",
-    title="Máster EOI - FastAPI API Microservicios",
+    title="Máster EOI - Microservicios",
     contact={
         "name": "Ricardo Vilchez",
         "url": "https://rickandmortyapi.com/",
@@ -72,7 +72,7 @@ def redirigir():
 
 # APM
 apm = make_apm_client({
-    'SERVICE_NAME': 'fastapi-ms',
+    'SERVICE_NAME': 'eoi-fastapi-ms',
     'DEBUG': True,
     'SERVER_URL': 'https://99d3dc1c9c6a4587bceeb60ff53a396e.apm.us-central1.gcp.cloud.es.io',
     'CAPTURE_HEADERS': True,

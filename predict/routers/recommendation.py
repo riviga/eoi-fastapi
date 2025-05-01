@@ -8,7 +8,7 @@ import random
 import asyncio
 
 '''
-ML prediction functionality with FastAPI
+ML prediction functionality
 '''
 
 router = APIRouter(tags=["recommendation"])
