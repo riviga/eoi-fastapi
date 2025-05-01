@@ -42,5 +42,5 @@ services:
     image: riviga77/eoi-fastapi-micro
     container_name: micro
     ports:
-      - "8005:8000"
+      - "8006:8000"
       

@@ -85,7 +85,7 @@ app.add_middleware(ElasticAPM, client=apm)
 
 @app.exception_handler(HTTPException)
 async def custom_http_exception_handler(request: Request, exc: HTTPException):
-    log.info(f"Caputando HTTPException motivo {exc.detail}")
+    log.info(f"Capturando HTTPException motivo {exc.detail}")
     apm.capture_exception()
     return await http_exception_handler(request, exc)
 
@@ -93,7 +93,7 @@ async def custom_http_exception_handler(request: Request, exc: HTTPException):
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request,exc: RequestValidationError):
     detail = "{}".format(str([i for i in exc.errors()][0]['msg']) + ": " + str([i for i in exc.errors()][0]['loc']))
-    log.info(f"Caputando RequestValidationError motivo {detail}")
+    log.info(f"Capturando RequestValidationError motivo {detail}")
     apm.capture_exception()
     return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={"detail": detail})
 

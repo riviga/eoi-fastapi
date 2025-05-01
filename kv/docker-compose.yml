@@ -1,7 +1,7 @@
 services:
   fastapi: 
     build: .
-    image: eoi-fastapi-kv
+    image: riviga77/eoi-fastapi-kv
     container_name: eoi-fastapi-kv
     ports:
       - "8000:8000"

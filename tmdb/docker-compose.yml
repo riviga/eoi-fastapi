@@ -1,7 +1,7 @@
 services:
   fastapi: 
     build: .
-    image: eoi-fastapi-tmdb
+    image: riviga77/eoi-fastapi-tmdb
     container_name: eoi-fastapi-tmdb
     ports:
       - "8000:8000"

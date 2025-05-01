@@ -1,7 +1,7 @@
 services:
   fastapi: 
     build: .
-    image: eoi-fastapi-holamundo
+    image: riviga77/eoi-fastapi-holamundo
     container_name: eoi-fastapi-holamundo
     ports:
       - "8000:8000"

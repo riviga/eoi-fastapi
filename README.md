@@ -11,10 +11,12 @@
 2. Create /tmdb/.env file with API_KEY_VALUE={value of TMDB apikey}
 
 ## How to run all apps from DockerHub ("production")
-1. `docker-compose up -d`
+1. Start: `docker-compose up -d`
+2. Stop: `docker-compose down`
 
 ## How to run all apps in local containers ("development")
-1. `docker compose -f .\docker-compose-dev.yml up -d --build`
+1. Start: `docker compose -f .\docker-compose-dev.yml up -d --build`
+2. Stop: `docker-compose -f .\docker-compose-dev.yml down`
 
 Swagger UI: 
     - HolaMundo:    http://localhost:8000/docs
@@ -22,4 +24,4 @@ Swagger UI:
     - Clave-valor:  http://localhost:8002/docs
     - Prediction:   http://localhost:8003/docs
     - TMDB:         http://localhost:8004/docs
-    - Microservices: http://localhost:8005/docs
+    - Microservices: http://localhost:8006/docs
