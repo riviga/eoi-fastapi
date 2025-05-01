@@ -1,4 +1,4 @@
-# For development: Builds all images with volumes for auto-reload
+# For development: Builds all images with volumes for code auto-reload
 services:
   holamundo:     
     build: /holamundo
