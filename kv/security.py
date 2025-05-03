@@ -73,7 +73,7 @@ def get_user(username: str):
     
     
 def authenticate_user(form_data: OAuth2PasswordRequestForm):
-    log.info("authenticate_user form_data [{form_data}]")
+    log.info(f"authenticate_user user [{form_data.username}] pass [{form_data.password}]")
     user = get_user(form_data.username)
     log.info(f"user [{user}]")
     if not pwd_context.verify(form_data.password, user.hashed_password):
